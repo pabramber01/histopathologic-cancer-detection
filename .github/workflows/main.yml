@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - name: Install dependencies
+        run: pip install -r ./requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
+      - name: Test
+        run: python ./histopathologic_cancer_detection/scripts/build_check.py
+      - name: Build the book
+        run: PYDEVD_DISABLE_FILE_VALIDATION=1 jb build -qq .
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_build/html/"
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+      - name: Generate release tag
+        id: tag
+        run: echo "release_tag=UserBuild_$(date +"%Y.%m.%d_%H-%M")" >> $GITHUB_OUTPUT
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.release_tag }}
