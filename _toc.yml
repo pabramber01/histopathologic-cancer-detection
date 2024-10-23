@@ -1,0 +1,6 @@
+format: jb-book
+root: histopathologic_cancer_detection/histopathologic_cancer_detection
+parts:
+  - caption: Notebooks
+    chapters:
+      - file: histopathologic_cancer_detection/notebooks/histopathologic_notebook

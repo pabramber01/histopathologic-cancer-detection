@@ -1,0 +1,14 @@
+notebook==7.2.2
+matplotlib==3.9.2
+numpy==1.26.3
+pandas==2.2.2
+scikit-learn==1.5.1
+optuna==4.0.0
+ipywidgets==8.1.5
+nbformat==5.10.4
+jupyter-book==1.0.0
+torch==2.4.1+cu124
+torchaudio==2.4.1+cu124
+torchvision==0.19.1+cu124
+tifffile==2024.9.20
+captum==0.7.0
